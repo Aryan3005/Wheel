@@ -14,130 +14,172 @@ if 'error' not in st.session_state:
 if 'is_spinning' not in st.session_state:
     st.session_state.is_spinning = False
 
-# --- Custom CSS for enhanced UI ---
+# --- Custom CSS for a beautiful, light UI ---
 st.markdown("""
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-    
     html, body, [class*="st-"] {
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Montserrat', sans-serif;
+    }
+    body {
+        background-color: #f0f2f6; /* A very light gray background */
+        color: #333333;
     }
     .main-header {
         text-align: center;
         font-size: 3rem;
         font-weight: 700;
-        color: #FF5733; /* A vibrant orange */
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        color: #4a90e2; /* Vibrant blue accent */
         margin-bottom: 0.5rem;
     }
     .subheader {
         text-align: center;
         font-size: 1.1rem;
-        color: #555555;
+        color: #666666;
+        margin-bottom: 2.5rem;
+    }
+    .card-container {
+        background-color: #ffffff;
+        padding: 2.5rem;
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         margin-bottom: 2rem;
+        border: 1px solid #e0e0e0;
     }
     .stTextInput > div > div > input {
-        border: 2px solid #4CAF50; /* A friendly green */
+        background-color: #f7f9fb;
+        border: 2px solid #e0e0e0;
+        color: #333333;
         border-radius: 0.75rem;
         padding: 0.75rem;
         font-size: 1rem;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: border-color 0.3s;
+    }
+    .stTextInput > div > div > input:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
     }
     .stButton>button {
         width: 100%;
-        background-color: #4CAF50;
         color: white;
         padding: 0.75rem;
         border-radius: 0.75rem;
         font-size: 1rem;
         font-weight: 600;
         margin-top: 0.5rem;
-        transition: background-color 0.3s ease;
+        transition: all 0.3s ease;
         border: none;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        background-image: linear-gradient(to right, #4a90e2 0%, #7e5be4 100%);
+        box-shadow: 0 4px 15px 0 rgba(74, 144, 226, 0.4);
     }
     .stButton>button:hover {
-        background-color: #45a049;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px 0 rgba(74, 144, 226, 0.6);
+        background-image: linear-gradient(to right, #4081d3 0%, #7451c8 100%);
+    }
+    .reset-button button {
+        background-image: linear-gradient(to right, #ff4c4c 0%, #e84343 100%);
+        box-shadow: 0 4px 15px 0 rgba(255, 76, 76, 0.4);
+    }
+    .reset-button button:hover {
+        background-image: linear-gradient(to right, #e84343 0%, #d63d3d 100%);
     }
     .result-box {
         text-align: center;
-        font-size: 2rem;
+        font-size: 2.5rem;
         font-weight: 700;
-        color: white;
-        background-image: linear-gradient(to right, #FF5733, #FFBD33);
+        color: #ffffff;
+        background-image: linear-gradient(to right, #4a90e2 0%, #7e5be4 100%);
         padding: 1.5rem;
-        border-radius: 1rem;
+        border-radius: 1.5rem;
         margin-top: 2rem;
-        box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-        animation: fadeIn 1s ease-in-out;
+        box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+        animation: fadeIn 1.5s;
     }
     .error-box {
         text-align: center;
         font-size: 1rem;
-        color: #D32F2F;
-        background-color: #FFCDD2;
+        color: #d64032;
+        background-color: #ffdddd;
         padding: 1rem;
         border-radius: 0.75rem;
         margin-top: 1.5rem;
-        border: 2px solid #EF9A9A;
-        animation: shake 0.5s;
+        border: 2px solid #e74c3c;
     }
     .spinner-container {
         text-align: center;
         margin-top: 2rem;
-    }
-    .spinner-icon {
         font-size: 3rem;
-        animation: spin 1s linear infinite;
+        color: #4a90e2;
+        animation: rotate 2s linear infinite;
+    }
+    .header {
+        background-color: #ffffff;
+        padding: 1rem;
+        border-bottom: 1px solid #e0e0e0;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .footer {
+        background-color: #ffffff;
+        padding: 1rem;
+        border-top: 1px solid #e0e0e0;
+        text-align: center;
+        color: #999999;
+        font-size: 0.9rem;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
     }
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(-20px); }
         to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes spin {
+    @keyframes rotate {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
-    }
-    @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-        20%, 40%, 60%, 80% { transform: translateX(5px); }
-    }
-    .st-d4 { /* Target Streamlit's container for the two columns */
-        gap: 1.5rem;
-    }
-    .spin-button-disabled > button {
-        background-color: #cccccc !important;
-        cursor: not-allowed;
     }
     </style>
 """, unsafe_allow_html=True)
 
 # --- App UI and Logic ---
 
-# Main title and subheader
-st.markdown('<div class="main-header">✨ The Lucky Draw!</div>', unsafe_allow_html=True)
-st.markdown('<div class="subheader">Enter names below to find a random winner. Good luck! 🍀</div>', unsafe_allow_html=True)
+# Header Section
+st.markdown('<div class="header"><h3><i class="fas fa-magic"></i> The Lucky Draw</h3></div>', unsafe_allow_html=True)
 
-# Name input form
-with st.form(key="name_form"):
-    name_input = st.text_input("Enter names (e.g., Alice, Bob, Amy, Charlie)", placeholder="Separate names with commas")
-    submit_button = st.form_submit_button("Add Names")
+# Main container for the app
+with st.container():
+    st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">✨ Lucky Name Picker</div>', unsafe_allow_html=True)
+    st.markdown('<div class="subheader">Enter names below and click "Draw a Winner" to get started!</div>', unsafe_allow_html=True)
 
-# Handle name submission
-if submit_button and name_input:
-    st.session_state.names = [name.strip() for name in name_input.split(',') if name.strip()]
-    st.session_state.error = ""
-    st.session_state.result = ""
-    if not st.session_state.names:
-        st.session_state.error = "Please enter at least one name."
-    else:
-        st.session_state.result = "Names added! Ready to spin! 🥳"
+    # Main content card
+    st.markdown('<div class="card-container">', unsafe_allow_html=True)
+
+    # Name input form
+    with st.form(key="name_form"):
+        name_input = st.text_input("Enter names of participants", placeholder="e.g., Alice, Bob, Amy, Charlie")
+        submit_button = st.form_submit_button("Add Names")
+
+    # Handle name submission
+    if submit_button and name_input:
+        st.session_state.names = [name.strip() for name in name_input.split(',') if name.strip()]
+        st.session_state.error = ""
+        st.session_state.result = ""
+        if not st.session_state.names:
+            st.session_state.error = "Please enter at least one name."
+        else:
+            st.session_state.result = "Names added! Ready to draw! 🚀"
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Spin and Reset buttons
 col1, col2 = st.columns([2, 1])
 with col1:
-    spin_button = st.button("Spin to Win! 🏆", disabled=not st.session_state.names or st.session_state.is_spinning)
+    spin_button = st.button("Draw a Winner 🏆", disabled=not st.session_state.names or st.session_state.is_spinning)
 with col2:
     reset_button = st.button("Reset", key="reset_button")
 
@@ -147,43 +189,40 @@ if reset_button:
     st.session_state.spin_count = 0
     st.session_state.result = ""
     st.session_state.error = ""
-    st.rerun()  # <--- Corrected line
+    st.rerun()
 
 # Handle spin
 if spin_button and st.session_state.names:
     st.session_state.is_spinning = True
     st.session_state.error = ""
     
-    # Placeholder for the spinning animation
     spinner_placeholder = st.empty()
     
-    for i in range(5): # Simulating a longer spin
-        for emoji in ["✨", "🌟", "🎉", "🔥"]:
-            spinner_placeholder.markdown(f'<div class="spinner-container"><div class="spinner-icon">{emoji}</div></div>', unsafe_allow_html=True)
+    # Simulate spinning with icons and text
+    spinner_emojis = ["<i class='fas fa-sync-alt fa-spin'></i>", "⚙️", "🌐", "⚡"]
+    for i in range(5): 
+        for emoji in spinner_emojis:
+            spinner_placeholder.markdown(f'<div class="spinner-container">{emoji}</div>', unsafe_allow_html=True)
             time.sleep(0.2)
     
     # Logic for selecting the winner
     if st.session_state.spin_count == 0:
-        # First spin is random
         st.session_state.result = f"Winner: {random.choice(st.session_state.names)}! 🎉"
     elif st.session_state.spin_count == 1:
-        # Second spin is an 'A' name
         a_names = [name for name in st.session_state.names if name.lower().startswith('a')]
         if a_names:
             st.session_state.result = f"Winner: {random.choice(a_names)}! 🌟"
         else:
-            st.session_state.error = "Oops! No names started with 'A' this time. A random name will be picked instead."
+            st.session_state.error = "No 'A' names found. A random winner was selected."
             st.session_state.result = f"Winner: {random.choice(st.session_state.names)}! 🌟"
     else:
-        # Subsequent spins are random
         st.session_state.result = f"Winner: {random.choice(st.session_state.names)}! 🎉"
     
     st.session_state.spin_count += 1
     st.session_state.is_spinning = False
     spinner_placeholder.empty()
     
-    # Rerun the app to show the result
-    st.rerun()  # <--- Corrected line
+    st.rerun()
 
 # Display result
 if st.session_state.result:
@@ -192,3 +231,6 @@ if st.session_state.result:
 # Display error
 if st.session_state.error:
     st.markdown(f'<div class="error-box">{st.session_state.error}</div>', unsafe_allow_html=True)
+
+# Footer Section
+st.markdown('<div class="footer">© 2024 The Lucky Draw. All rights reserved. | Powered by Streamlit</div>', unsafe_allow_html=True)
