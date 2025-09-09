@@ -1904,58 +1904,104 @@ with tab4:
     - **Advanced Analytics**: Machine learning insights and predictive modeling
     """)
 
-# Premium Footer
-st.markdown("""
-<div class="premium-footer">
-    <div class="footer-brand">WheelMaster Pro™</div>
-    
-    <div class="footer-links">
-        <a href="#terms">Terms of Service</a>
-        <a href="#privacy">Privacy Policy</a>
-        <a href="#security">Security Center</a>
-        <a href="#api">API Documentation</a>
-        <a href="#support">Enterprise Support</a>
-        <a href="#status">System Status</a>
-        <a href="#blog">Blog</a>
-        <a href="#careers">Careers</a>
+import streamlit as st
+
+import streamlit as st
+
+import streamlit as st
+
+import streamlit as st
+
+def render_thin_footer():
+    st.markdown("""
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+        :root {
+            --primary-color: #111827;
+            --accent-color: #2563eb;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .thin-footer {
+            background: var(--primary-color);
+            padding: 1rem 2rem;
+            margin-top: 2rem;
+            color: var(--text-primary);
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem; /* Uniform gap between all elements */
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem; /* Equal spacing between links */
+            align-items: center;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-weight: 400;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .thin-footer {
+                padding: 1.5rem 1rem;
+            }
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+
+    <div class="thin-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#privacy">Privacy</a>
+                <a href="#terms">Terms</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 DecisionFlow Inc. All rights reserved.
+            </div>
+        </div>
     </div>
-    
-    <div class="footer-certifications">
-        <div class="certification-badge">
-            <span>🏛️</span>
-            <span>SOC 2 Type II</span>
-        </div>
-        <div class="certification-badge">
-            <span>🛡️</span>
-            <span>ISO 27001</span>
-        </div>
-        <div class="certification-badge">
-            <span>🇪🇺</span>
-            <span>GDPR Compliant</span>
-        </div>
-        <div class="certification-badge">
-            <span>🌱</span>
-            <span>Carbon Neutral</span>
-        </div>
-        <div class="certification-badge">
-            <span>♿</span>
-            <span>WCAG 2.1 AA</span>
-        </div>
-    </div>
-    
-    <div style="border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 2rem;">
-        <div style="color: var(--text-primary); font-weight: 600; margin-bottom: 1rem; font-size: 1.1rem;">
-            WheelMaster Pro™ - The Professional Standard Since 2019
-        </div>
-        <div style="color: var(--text-secondary); margin-bottom: 1rem;">
-            Trusted by 2.1M+ professionals worldwide • 1.8B+ decisions made • 99.97% uptime
-        </div>
-        <div style="color: var(--text-muted); font-size: 0.9rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-            <span>Version 3.0.0</span>
-            <span>Last updated: September 2025</span>
-            <span>© 2019-2025 WheelMaster Technologies Inc.</span>
-            <span>All rights reserved</span>
-        </div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
+
+# Call the footer in your Streamlit app
+render_thin_footer()
